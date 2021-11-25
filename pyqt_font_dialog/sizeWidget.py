@@ -1,4 +1,4 @@
-from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import pyqtSignal, Qt
 from PyQt5.QtGui import QFontDatabase
 from PyQt5.QtWidgets import QListWidget, QWidget, QVBoxLayout, QLabel, QLineEdit
 
@@ -46,15 +46,17 @@ class SizeWidget(QWidget):
         self.__sizeListWidget.setCurrentRow(0)
         self.__sizeLineEdit.setText(sizes[0])
 
-    def setSizes(self, sizes):
+    def setSizes(self, sizes, prev_size=10):
         sizes = list(map(str, sizes))
         self.__sizeListWidget.clear()
         self.__sizeListWidget.addItems(sizes)
-        item = self.__sizeListWidget.item(0)
+        item = self.__sizeListWidget.findItems(prev_size, Qt.MatchFixedString)[0]
         if item:
-            self.__sizeListWidget.setCurrentItem(item)
-            self.__sizeLineEdit.setText(item.text())
-
+            pass
+        else:
+            item = self.__sizeListWidget.item(0)
+        self.__sizeListWidget.setCurrentItem(item)
+        self.__sizeLineEdit.setText(item.text())
     def __sizeItemChanged(self):
         self.sizeItemChanged.emit(int(self.__sizeListWidget.currentItem().text()))
 
