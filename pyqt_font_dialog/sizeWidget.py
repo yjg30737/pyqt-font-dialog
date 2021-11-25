@@ -62,3 +62,5 @@ class SizeWidget(QWidget):
     def __sizeItemChanged(self):
         self.sizeItemChanged.emit(int(self.__sizeListWidget.currentItem().text()))
 
+    def getSize(self):
+        return self.__sizeListWidget.currentItem().text()

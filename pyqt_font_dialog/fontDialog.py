@@ -19,7 +19,6 @@ class FontDialog(QDialog):
         self.setFixedSize(500, 400)
 
         self.__previewTextEdit = QTextEdit()
-        self.__previewTextEdit.setText('Sample')
 
         self.__fontWidget = FontWidget()
         self.__fontWidget.fontItemChanged.connect(self.__fontItemChangedExec)
@@ -30,6 +29,8 @@ class FontDialog(QDialog):
         self.__styleWidget = StyleWidget()
         self.__styleWidget.boldChecked.connect(self.__setBold)
         self.__styleWidget.italicChecked.connect(self.__setItalic)
+
+        self.__initPreviewTextEdit()
 
         lay = QHBoxLayout()
         lay.addWidget(self.__fontWidget)
@@ -73,6 +74,19 @@ class FontDialog(QDialog):
         lay.setContentsMargins(5, 5, 5, 5)
         self.setLayout(lay)
 
+    def __initPreviewTextEdit(self):
+        self.__previewTextEdit.setText('Sample')
+        font_family = self.__fontWidget.getFontFamily()
+        font_size = self.__sizeWidget.getSize()
+        bold_f = self.__styleWidget.isBold()
+        italic_f = self.__styleWidget.isItalic()
+        font = self.__previewTextEdit.currentFont()
+        font.setFamily(font_family)
+        font.setPixelSize(int(font_size))
+        font.setBold(bold_f)
+        font.setItalic(italic_f)
+        self.__previewTextEdit.setCurrentFont(font)
+
     def __setBold(self, f: int):
         font = self.__previewTextEdit.currentFont()
         font.setBold(f)
@@ -90,7 +104,6 @@ class FontDialog(QDialog):
         self.__previewTextEdit.setCurrentFont(font)
 
     def __fontItemChangedExec(self, font_text, fd):
-        self.__previewTextEdit.selectAll()
         font = self.__previewTextEdit.currentFont()
         prev_size = font.pixelSize()
         styles = fd.styles(font_text)

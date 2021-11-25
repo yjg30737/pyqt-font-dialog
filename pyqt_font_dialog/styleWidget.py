@@ -14,16 +14,16 @@ class StyleWidget(QWidget):
         groupBox = QGroupBox()
         groupBox.setTitle('Style')
 
-        boldChkBox = QCheckBox('Bold')
-        italicChkBox = QCheckBox('Italic')
+        self.__boldChkBox = QCheckBox('Bold')
+        self.__italicChkBox = QCheckBox('Italic')
 
-        boldChkBox.stateChanged.connect(self.boldChecked)
-        italicChkBox.stateChanged.connect(self.italicChecked)
+        self.__boldChkBox.stateChanged.connect(self.boldChecked)
+        self.__italicChkBox.stateChanged.connect(self.italicChecked)
 
         lay = QVBoxLayout()
         lay.setAlignment(Qt.AlignTop)
-        lay.addWidget(boldChkBox)
-        lay.addWidget(italicChkBox)
+        lay.addWidget(self.__boldChkBox)
+        lay.addWidget(self.__italicChkBox)
 
         groupBox.setLayout(lay)
 
@@ -32,3 +32,8 @@ class StyleWidget(QWidget):
 
         self.setLayout(lay)
 
+    def isBold(self):
+        return self.__boldChkBox.isChecked()
+
+    def isItalic(self):
+        return self.__italicChkBox.isChecked()

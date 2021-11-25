@@ -49,4 +49,7 @@ class FontWidget(QWidget):
         self.__fontLineEdit.setText(font_name)
         fd = QFontDatabase()
         self.fontItemChanged.emit(font_name, fd)
+
+    def getFontFamily(self):
+        return self.__fontListWidget.currentItem().text()
         
