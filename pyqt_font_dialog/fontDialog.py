@@ -88,11 +88,13 @@ class FontDialog(QDialog):
         self.__previewTextEdit.setText('Sample')
 
     def __setBold(self, f: int):
+        self.__previewTextEdit.selectAll()
         font = self.__previewTextEdit.currentFont()
         font.setBold(f)
         self.__previewTextEdit.setCurrentFont(font)
 
     def __setItalic(self, f: bool):
+        self.__previewTextEdit.selectAll()
         font = self.__previewTextEdit.currentFont()
         font.setItalic(f)
         self.__previewTextEdit.setCurrentFont(font)
@@ -104,6 +106,7 @@ class FontDialog(QDialog):
         self.__previewTextEdit.setCurrentFont(font)
 
     def __fontItemChangedExec(self, font_text, fd):
+        self.__previewTextEdit.selectAll()
         font = self.__previewTextEdit.currentFont()
         prev_size = font.pixelSize()
         styles = fd.styles(font_text)
