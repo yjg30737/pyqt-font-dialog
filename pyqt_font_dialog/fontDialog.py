@@ -108,12 +108,3 @@ class FontDialog(QDialog):
 
     def getFont(self):
         return self.__previewTextEdit.currentFont()
-
-
-if __name__ == "__main__":
-    import sys
-
-    app = QApplication(sys.argv)
-    dialog = FontDialog()
-    dialog.show()
-    app.exec_()
