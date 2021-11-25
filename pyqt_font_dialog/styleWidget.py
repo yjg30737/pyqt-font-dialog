@@ -4,8 +4,8 @@ from PyQt5.QtWidgets import QListWidget, QWidget, QLineEdit, QVBoxLayout, QLabel
 
 
 class StyleWidget(QWidget):
-    boldChecked = pyqtSignal(bool)
-    italicChecked = pyqtSignal(bool)
+    boldChecked = pyqtSignal(int)
+    italicChecked = pyqtSignal(int)
 
     def __init__(self):
         super().__init__()

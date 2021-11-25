@@ -73,7 +73,7 @@ class FontDialog(QDialog):
         lay.setContentsMargins(5, 5, 5, 5)
         self.setLayout(lay)
 
-    def __setBold(self, f: bool):
+    def __setBold(self, f: int):
         font = self.__previewTextEdit.currentFont()
         font.setBold(f)
         self.__previewTextEdit.setCurrentFont(font)
