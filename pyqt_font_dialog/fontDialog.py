@@ -25,7 +25,8 @@ class FontDialog(QDialog):
         self.__fontWidget.fontItemChanged.connect(self.__fontItemChangedExec)
 
         self.__styleWidget = StyleWidget()
-        self.__styleWidget.styleItemChanged.connect(self.__styleItemChangedExec)
+        self.__styleWidget.boldChecked.connect(self.__setBold)
+        self.__styleWidget.italicChecked.connect(self.__setItalic)
 
         self.__sizeWidget = SizeWidget()
         self.__sizeWidget.sizeItemChanged.connect(self.__sizeItemChangedExec)
@@ -72,10 +73,14 @@ class FontDialog(QDialog):
         lay.setContentsMargins(5, 5, 5, 5)
         self.setLayout(lay)
 
-    def __styleItemChangedExec(self, style):
-        self.__previewTextEdit.selectAll()
+    def __setBold(self, f: bool):
         font = self.__previewTextEdit.currentFont()
-        font.setStyleName(style)
+        font.setBold(f)
+        self.__previewTextEdit.setCurrentFont(font)
+
+    def __setItalic(self, f: bool):
+        font = self.__previewTextEdit.currentFont()
+        font.setItalic(f)
         self.__previewTextEdit.setCurrentFont(font)
 
     def __sizeItemChangedExec(self, size):
