@@ -24,13 +24,11 @@ class StyleWidget(QWidget):
         lay.setAlignment(Qt.AlignTop)
         lay.addWidget(self.__boldChkBox)
         lay.addWidget(self.__italicChkBox)
-        lay.setContentsMargins(0, 0, 0, 0)
 
         groupBox.setLayout(lay)
 
         lay = QGridLayout()
         lay.addWidget(groupBox)
-        lay.setContentsMargins(0, 0, 0, 0)
 
         self.setLayout(lay)
 
