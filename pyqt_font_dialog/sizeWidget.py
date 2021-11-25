@@ -50,7 +50,8 @@ class SizeWidget(QWidget):
         sizes = list(map(str, sizes))
         self.__sizeListWidget.clear()
         self.__sizeListWidget.addItems(sizes)
-        item = self.__sizeListWidget.findItems(str(prev_size), Qt.MatchFixedString)[0]
+        print(prev_size)
+        item = self.__sizeListWidget.findItems(str(prev_size), Qt.MatchFixedString)
         if item:
             pass
         else:
