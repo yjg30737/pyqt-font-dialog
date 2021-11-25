@@ -24,17 +24,17 @@ class FontDialog(QDialog):
         self.__fontWidget = FontWidget()
         self.__fontWidget.fontItemChanged.connect(self.__fontItemChangedExec)
 
+        self.__sizeWidget = SizeWidget()
+        self.__sizeWidget.sizeItemChanged.connect(self.__sizeItemChangedExec)
+
         self.__styleWidget = StyleWidget()
         self.__styleWidget.boldChecked.connect(self.__setBold)
         self.__styleWidget.italicChecked.connect(self.__setItalic)
 
-        self.__sizeWidget = SizeWidget()
-        self.__sizeWidget.sizeItemChanged.connect(self.__sizeItemChangedExec)
-
         lay = QHBoxLayout()
         lay.addWidget(self.__fontWidget)
-        lay.addWidget(self.__styleWidget)
         lay.addWidget(self.__sizeWidget)
+        lay.addWidget(self.__styleWidget)
         lay.setContentsMargins(0, 0, 0, 0)
         lay.setSpacing(0)
 
@@ -91,7 +91,6 @@ class FontDialog(QDialog):
 
     def __fontItemChangedExec(self, font_text, fd):
         styles = fd.styles(font_text)
-        self.__styleWidget.setStyles(styles)
 
         sizes = fd.pointSizes(font_text, styles[0])
         self.__sizeWidget.setSizes(sizes)

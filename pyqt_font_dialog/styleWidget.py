@@ -1,5 +1,4 @@
-from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtGui import QFontDatabase
+from PyQt5.QtCore import pyqtSignal, Qt
 from PyQt5.QtWidgets import QListWidget, QWidget, QLineEdit, QVBoxLayout, QLabel, QGroupBox, QCheckBox, QGridLayout
 
 
@@ -22,6 +21,7 @@ class StyleWidget(QWidget):
         italicChkBox.stateChanged.connect(self.italicChecked)
 
         lay = QVBoxLayout()
+        lay.setAlignment(Qt.AlignTop)
         lay.addWidget(boldChkBox)
         lay.addWidget(italicChkBox)
 
