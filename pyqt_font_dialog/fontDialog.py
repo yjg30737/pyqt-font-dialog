@@ -90,16 +90,19 @@ class FontDialog(QDialog):
         self.__previewTextEdit.setCurrentFont(font)
 
     def __fontItemChangedExec(self, font_text, fd):
-        prev_size = self.__previewTextEdit.currentFont().pixelSize()
+        font = self.__previewTextEdit.currentFont()
+        prev_size = font.pixelSize()
         styles = fd.styles(font_text)
 
-        sizes = fd.pointSizes(font_text, styles[0])
-        self.__sizeWidget.setSizes(sizes, prev_size)
-
-        font = QFont()
         font.setFamily(font_text)
-        font.setPixelSize(int(sizes[0]))
-        font.setStyleName(styles[0])
+
+        sizes = fd.pointSizes(font_text, styles[0])
+        if prev_size in sizes:
+            self.__sizeWidget.setSizes(sizes, prev_size)
+            font.setPixelSize(prev_size)
+        else:
+            self.__sizeWidget.setSizes(sizes, -1)
+            font.setPixelSize(sizes[0])
 
         self.__previewTextEdit.setCurrentFont(font)
 
