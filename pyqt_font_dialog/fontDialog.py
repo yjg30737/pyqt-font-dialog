@@ -90,6 +90,7 @@ class FontDialog(QDialog):
         self.__previewTextEdit.setCurrentFont(font)
 
     def __fontItemChangedExec(self, font_text, fd):
+        self.__previewTextEdit.selectAll()
         font = self.__previewTextEdit.currentFont()
         prev_size = font.pixelSize()
         styles = fd.styles(font_text)
