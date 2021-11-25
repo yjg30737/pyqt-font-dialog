@@ -75,7 +75,6 @@ class FontDialog(QDialog):
         self.setLayout(lay)
 
     def __initPreviewTextEdit(self):
-        self.__previewTextEdit.setText('Sample')
         font_family = self.__fontWidget.getFontFamily()
         font_size = self.__sizeWidget.getSize()
         bold_f = self.__styleWidget.isBold()
@@ -86,6 +85,7 @@ class FontDialog(QDialog):
         font.setBold(bold_f)
         font.setItalic(italic_f)
         self.__previewTextEdit.setCurrentFont(font)
+        self.__previewTextEdit.setText('Sample')
 
     def __setBold(self, f: int):
         font = self.__previewTextEdit.currentFont()
