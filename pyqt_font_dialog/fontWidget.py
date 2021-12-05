@@ -1,21 +1,21 @@
-from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtGui import QFontDatabase
-from PyQt5.QtWidgets import QListWidget, QWidget, QVBoxLayout, QLabel, QLineEdit
+from PyQt5.QtCore import pyqtSignal, Qt
+from PyQt5.QtGui import QFontDatabase, QFont
+from PyQt5.QtWidgets import QListWidget, QWidget, QVBoxLayout, QLabel, QLineEdit, QListWidgetItem
 
 
 class FontWidget(QWidget):
     fontItemChanged = pyqtSignal(str, QFontDatabase)
 
-    def __init__(self):
+    def __init__(self, font: QFont = QFont('Arial', 10)):
         super().__init__()
-        self.__initUi()
+        self.__initUi(font=font)
 
-    def __initUi(self):
+    def __initUi(self, font: QFont):
         self.__fontLineEdit = QLineEdit()
         self.__fontLineEdit.setReadOnly(True)
 
         self.__fontListWidget = QListWidget()
-        self.__initFonts()
+        self.__initFonts(font)
         self.__fontListWidget.itemSelectionChanged.connect(self.__fontItemChanged)
 
         lay = QVBoxLayout()
@@ -35,11 +35,22 @@ class FontWidget(QWidget):
 
         self.setLayout(lay)
 
-    def __initFonts(self):
+    def __initFonts(self, font: QFont):
+        self.__initFontsList()
+        self.__initCurrentFont(font=font)
+
+    def __initFontsList(self):
         fd = QFontDatabase()
         fm = fd.families(QFontDatabase.Any)
         self.__fontListWidget.addItems(fm)
-        item = self.__fontListWidget.item(0)
+
+    def __initCurrentFont(self, font: QFont):
+        items = self.__fontListWidget.findItems(font.family(), Qt.MatchFixedString)
+        item = QListWidgetItem()
+        if items:
+            item = items[0]
+        else:
+            item = self.__fontListWidget.item(0)
         self.__fontListWidget.setCurrentItem(item)
         font_name = item.text()
         self.__fontLineEdit.setText(font_name)

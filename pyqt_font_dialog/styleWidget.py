@@ -1,4 +1,5 @@
 from PyQt5.QtCore import pyqtSignal, Qt
+from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QListWidget, QWidget, QLineEdit, QVBoxLayout, QLabel, QGroupBox, QCheckBox, QGridLayout
 
 
@@ -6,11 +7,11 @@ class StyleWidget(QWidget):
     boldChecked = pyqtSignal(int)
     italicChecked = pyqtSignal(int)
 
-    def __init__(self):
+    def __init__(self, font: QFont = QFont('Arial', 10)):
         super().__init__()
-        self.__initUi()
+        self.__initUi(font=font)
 
-    def __initUi(self):
+    def __initUi(self, font: QFont):
         groupBox = QGroupBox()
         groupBox.setTitle('Style')
 
@@ -19,6 +20,8 @@ class StyleWidget(QWidget):
 
         self.__boldChkBox.stateChanged.connect(self.boldChecked)
         self.__italicChkBox.stateChanged.connect(self.italicChecked)
+
+        self.__initCurrentStyle(font=font)
 
         lay = QVBoxLayout()
         lay.setAlignment(Qt.AlignTop)
@@ -31,6 +34,10 @@ class StyleWidget(QWidget):
         lay.addWidget(groupBox)
 
         self.setLayout(lay)
+
+    def __initCurrentStyle(self, font: QFont):
+        self.__boldChkBox.setChecked(font.bold())
+        self.__italicChkBox.setChecked(font.italic())
 
     def isBold(self):
         return self.__boldChkBox.isChecked()

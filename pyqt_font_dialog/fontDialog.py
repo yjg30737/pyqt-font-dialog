@@ -9,24 +9,24 @@ from pyqt_font_dialog.styleWidget import StyleWidget
 
 
 class FontDialog(QDialog):
-    def __init__(self):
+    def __init__(self, font: QFont = QFont('Arial', 10), title='Font'):
         super().__init__()
-        self.__initUi()
+        self.__initUi(font=font, title=title)
 
-    def __initUi(self):
-        self.setWindowTitle('Font')
+    def __initUi(self, font: QFont, title):
+        self.setWindowTitle(title)
         self.setWindowFlags(Qt.WindowCloseButtonHint)
         self.setFixedSize(500, 400)
 
         self.__previewTextEdit = QTextEdit()
 
-        self.__fontWidget = FontWidget()
+        self.__fontWidget = FontWidget(font)
         self.__fontWidget.fontItemChanged.connect(self.__fontItemChangedExec)
 
-        self.__sizeWidget = SizeWidget()
+        self.__sizeWidget = SizeWidget(font)
         self.__sizeWidget.sizeItemChanged.connect(self.__sizeItemChangedExec)
 
-        self.__styleWidget = StyleWidget()
+        self.__styleWidget = StyleWidget(font)
         self.__styleWidget.boldChecked.connect(self.__setBold)
         self.__styleWidget.italicChecked.connect(self.__setItalic)
 
@@ -125,3 +125,12 @@ class FontDialog(QDialog):
 
     def getFont(self):
         return self.__previewTextEdit.currentFont()
+
+
+if __name__ == "__main__":
+    import sys
+
+    app = QApplication(sys.argv)
+    fontDialog = FontDialog()
+    fontDialog.show()
+    app.exec_()
