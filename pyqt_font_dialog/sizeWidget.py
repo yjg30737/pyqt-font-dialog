@@ -49,6 +49,7 @@ class SizeWidget(QWidget):
         self.__sizeListWidget.addItems(sizes)
 
     def __initCurrentSize(self, font: QFont):
+        print(font.pointSize())
         items = self.__sizeListWidget.findItems(str(font.pointSize()), Qt.MatchFixedString)
         item = QListWidgetItem()
         if items:
@@ -57,7 +58,6 @@ class SizeWidget(QWidget):
             item = self.__sizeListWidget.item(0)
         self.__sizeListWidget.setCurrentItem(item)
         size_text = item.text()
-        print(size_text)
         self.__sizeLineEdit.setText(size_text)
 
     def setSizes(self, sizes, prev_size=10):
