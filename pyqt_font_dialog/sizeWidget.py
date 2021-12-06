@@ -57,6 +57,7 @@ class SizeWidget(QWidget):
             item = self.__sizeListWidget.item(0)
         self.__sizeListWidget.setCurrentItem(item)
         size_text = item.text()
+        print(size_text)
         self.__sizeLineEdit.setText(size_text)
 
     def setSizes(self, sizes, prev_size=10):
