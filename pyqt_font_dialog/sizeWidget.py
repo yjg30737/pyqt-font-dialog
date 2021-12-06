@@ -42,7 +42,13 @@ class SizeWidget(QWidget):
     def __initSizesList(self, font: QFont):
         fd = QFontDatabase()
         font_name = font.family()
-        style_name = fd.styles(font_name)[0]
+        style_name = fd.styles(font_name)
+        # In case of font is not in the font list
+        if style_name:
+            style_name = style_name[0]
+        else:
+            font_name = 'Arial'
+            style_name = fd.styles(font_name)
         sizes = fd.pointSizes(font_name, style_name)
         sizes = list(map(str, sizes))
         self.__sizeListWidget.addItems(sizes)
