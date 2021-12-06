@@ -81,7 +81,7 @@ class FontDialog(QDialog):
         italic_f = self.__styleWidget.isItalic()
         font = self.__previewTextEdit.currentFont()
         font.setFamily(font_family)
-        font.setPixelSize(int(font_size))
+        font.setPointSize(int(font_size))
         font.setBold(bold_f)
         font.setItalic(italic_f)
         self.__previewTextEdit.setCurrentFont(font)
@@ -102,13 +102,13 @@ class FontDialog(QDialog):
     def __sizeItemChangedExec(self, size):
         self.__previewTextEdit.selectAll()
         font = self.__previewTextEdit.currentFont()
-        font.setPixelSize(size)
+        font.setPointSize(size)
         self.__previewTextEdit.setCurrentFont(font)
 
     def __fontItemChangedExec(self, font_text, fd):
         self.__previewTextEdit.selectAll()
         font = self.__previewTextEdit.currentFont()
-        prev_size = font.pixelSize()
+        prev_size = font.pointSize()
         styles = fd.styles(font_text)
 
         font.setFamily(font_text)
@@ -116,10 +116,10 @@ class FontDialog(QDialog):
         sizes = fd.pointSizes(font_text, styles[0])
         if prev_size in sizes:
             self.__sizeWidget.setSizes(sizes, prev_size)
-            font.setPixelSize(prev_size)
+            font.setPointSize(prev_size)
         else:
             self.__sizeWidget.setSizes(sizes, -1)
-            font.setPixelSize(sizes[0])
+            font.setPointSize(sizes[0])
 
         self.__previewTextEdit.setCurrentFont(font)
 

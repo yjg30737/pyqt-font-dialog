@@ -54,8 +54,7 @@ class SizeWidget(QWidget):
         self.__sizeListWidget.addItems(sizes)
 
     def __initCurrentSize(self, font: QFont):
-        # find the pixel size instead of point size because point size is always -1 at this point for some reasons
-        items = self.__sizeListWidget.findItems(str(font.pixelSize()), Qt.MatchFixedString)
+        items = self.__sizeListWidget.findItems(str(font.pointSize()), Qt.MatchFixedString)
         item = QListWidgetItem()
         if items:
             item = items[0]
