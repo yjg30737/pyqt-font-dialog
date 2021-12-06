@@ -36,12 +36,12 @@ class SizeWidget(QWidget):
         self.setLayout(lay)
 
     def __initSizes(self, font: QFont):
-        self.__initSizesList()
+        self.__initSizesList(font=font)
         self.__initCurrentSize(font=font)
 
-    def __initSizesList(self):
+    def __initSizesList(self, font: QFont):
         fd = QFontDatabase()
-        fm = fd.families(QFontDatabase.Any)
+        fm = font.family()
         font_name = fm[0]
         style_name = fd.styles(font_name)[0]
         sizes = fd.pointSizes(font_name, style_name)
