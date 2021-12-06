@@ -41,8 +41,7 @@ class SizeWidget(QWidget):
 
     def __initSizesList(self, font: QFont):
         fd = QFontDatabase()
-        fm = font.family()
-        font_name = fm[0]
+        font_name = font.family()
         style_name = fd.styles(font_name)[0]
         sizes = fd.pointSizes(font_name, style_name)
         sizes = list(map(str, sizes))
