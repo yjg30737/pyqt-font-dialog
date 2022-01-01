@@ -8,11 +8,12 @@ class FontWidget(QWidget):
 
     def __init__(self, font: QFont = QFont('Arial', 10)):
         super().__init__()
+        self.__font_families = []
         self.__initUi(font=font)
 
     def __initUi(self, font: QFont):
         self.__fontLineEdit = QLineEdit()
-        self.__fontLineEdit.setReadOnly(True)
+        self.__fontLineEdit.textEdited.connect(self.__textEdited)
 
         self.__fontListWidget = QListWidget()
         self.__initFonts(font)
@@ -42,6 +43,7 @@ class FontWidget(QWidget):
     def __initFontsList(self):
         fd = QFontDatabase()
         fm = fd.families(QFontDatabase.Any)
+        self.__font_families.extend(fm)
         self.__fontListWidget.addItems(fm)
 
     def __initCurrentFont(self, font: QFont):
@@ -61,6 +63,24 @@ class FontWidget(QWidget):
         fd = QFontDatabase()
         self.fontItemChanged.emit(font_name, fd)
 
+    def __textEdited(self):
+        self.__fontListWidget.clear()
+        text = self.__fontLineEdit.text()
+        if text.strip() != '':
+            match_families = []
+            for family in self.__font_families:
+                if family.startswith(text):
+                    match_families.append(family)
+            if match_families:
+                self.__fontListWidget.addItems(match_families)
+            else:
+                pass
+        else:
+            self.__fontListWidget.addItems(self.__font_families)
+
     def getFontFamily(self):
-        return self.__fontListWidget.currentItem().text()
-        
+        item = self.__fontListWidget.currentItem()
+        if item:
+            return item.text()
+        else:
+            return 'Arial'

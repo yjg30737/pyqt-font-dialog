@@ -11,6 +11,7 @@ from pyqt_font_dialog.styleWidget import StyleWidget
 class FontDialog(QDialog):
     def __init__(self, font: QFont = QFont('Arial', 10), title='Font'):
         super().__init__()
+        self.__current_font = font
         self.__initUi(font=font, title=title)
 
     def __initUi(self, font: QFont, title):
@@ -19,6 +20,7 @@ class FontDialog(QDialog):
         self.setFixedSize(500, 400)
 
         self.__previewTextEdit = QTextEdit()
+        self.__previewTextEdit.textChanged.connect(self.__textChanged)
 
         self.__fontWidget = FontWidget(font)
         self.__fontWidget.fontItemChanged.connect(self.__fontItemChangedExec)
@@ -92,18 +94,21 @@ class FontDialog(QDialog):
         font = self.__previewTextEdit.currentFont()
         font.setBold(f)
         self.__previewTextEdit.setCurrentFont(font)
+        self.__current_font = font
 
     def __setItalic(self, f: bool):
         self.__previewTextEdit.selectAll()
         font = self.__previewTextEdit.currentFont()
         font.setItalic(f)
         self.__previewTextEdit.setCurrentFont(font)
+        self.__current_font = font
 
     def __sizeItemChangedExec(self, size):
         self.__previewTextEdit.selectAll()
         font = self.__previewTextEdit.currentFont()
         font.setPointSize(size)
         self.__previewTextEdit.setCurrentFont(font)
+        self.__current_font = font
 
     def __fontItemChangedExec(self, font_text, fd):
         self.__previewTextEdit.selectAll()
@@ -118,13 +123,21 @@ class FontDialog(QDialog):
             self.__sizeWidget.setSizes(sizes, prev_size)
             font.setPointSize(prev_size)
         else:
-            self.__sizeWidget.setSizes(sizes, -1)
-            font.setPointSize(sizes[0])
+            self.__sizeWidget.setSizes(sizes, prev_size)
+            # font.setPointSize(sizes[0])
 
         self.__previewTextEdit.setCurrentFont(font)
+        self.__current_font = font
 
     def getFont(self):
         return self.__previewTextEdit.currentFont()
+
+    def __textChanged(self):
+        text = self.__previewTextEdit.toPlainText()
+        if text.strip() != '':
+            pass
+        else:
+            self.__previewTextEdit.setCurrentFont(self.__current_font)
 
 
 if __name__ == "__main__":
