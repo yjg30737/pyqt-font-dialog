@@ -1,11 +1,11 @@
 # pyqt-font-dialog
 Font dialog made with PyQt
 
-## License
-MIT
-
 ## Requirements
 PyQt5 >= 5.8
+
+## Setup
+```pip3 install git+https://github.com/yjg30737/pyqt-font-dialog.git --upgrade```
 
 ## Usage
 ```python
