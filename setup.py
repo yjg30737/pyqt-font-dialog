@@ -7,7 +7,7 @@ setup(
     author_email='yjg30737@gmail.com',
     license='MIT',
     packages=find_packages(),
-    description='Font dialog made with PyQt',
+    description='PyQt Font Dialog',
     url='https://github.com/yjg30737/pyqt-font-dialog.git',
     install_requires=[
         'PyQt5>=5.8'
