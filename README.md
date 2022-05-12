@@ -5,7 +5,7 @@ PyQt Font Dialog
 PyQt5 >= 5.8
 
 ## Setup
-```pip3 install git+https://github.com/yjg30737/pyqt-font-dialog.git --upgrade```
+`python -m pip install pyqt-font-dialog`
 
 ## Usage
 ```python
