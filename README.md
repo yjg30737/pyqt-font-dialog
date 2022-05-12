@@ -9,10 +9,10 @@ PyQt5 >= 5.8
 
 ## Usage
 ```python
-dialog = FontDialog()
+dialog = FontDialog(textEdit.currentFont())
 reply = dialog.exec()
 if reply == QDialog.Accepted:
-    self.__mainTextEdit.setCurrentFont(dialog.get_font())
+    textEdit.setCurrentFont(dialog.get_font())
 ```
 
 ## Preview
