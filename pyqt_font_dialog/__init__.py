@@ -1,4 +1,2 @@
-from .fontDialog import *
-from .fontWidget import *
-from .sizeWidget import *
-from .styleWidget import *
+from pyqt_font_dialog.fontDialog import FontDialog
+from pyqt_font_dialog.fontWidget import FontWidget

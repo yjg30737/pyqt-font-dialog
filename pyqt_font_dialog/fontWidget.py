@@ -1,86 +1,118 @@
-from PyQt5.QtCore import pyqtSignal, Qt
-from PyQt5.QtGui import QFontDatabase, QFont
-from PyQt5.QtWidgets import QListWidget, QWidget, QVBoxLayout, QLabel, QLineEdit, QListWidgetItem
+from PyQt5.QtGui import QFont
+from PyQt5.QtWidgets import QLabel, QSizePolicy, \
+    QTextEdit, QVBoxLayout, QWidget, QHBoxLayout
+
+from pyqt_font_dialog.fontItemWidget import FontItemWidget
+from pyqt_font_dialog.sizeWidget import SizeWidget
+from pyqt_font_dialog.styleWidget import StyleWidget
 
 
 class FontWidget(QWidget):
-    fontItemChanged = pyqtSignal(str, QFontDatabase)
-
     def __init__(self, font: QFont = QFont('Arial', 10)):
         super().__init__()
-        self.__font_families = []
+        self.__current_font = font
         self.__initUi(font=font)
 
     def __initUi(self, font: QFont):
-        self.__fontLineEdit = QLineEdit()
-        self.__fontLineEdit.textEdited.connect(self.__textEdited)
+        self.__previewTextEdit = QTextEdit()
+        self.__previewTextEdit.textChanged.connect(self.__textChanged)
 
-        self.__fontListWidget = QListWidget()
-        self.__initFonts(font)
-        self.__fontListWidget.itemSelectionChanged.connect(self.__fontItemChanged)
+        self.__fontItemWidget = FontItemWidget(font)
+        self.__fontItemWidget.fontItemChanged.connect(self.__fontItemChangedExec)
 
-        lay = QVBoxLayout()
-        lay.addWidget(self.__fontLineEdit)
-        lay.addWidget(self.__fontListWidget)
+        self.__sizeWidget = SizeWidget(font)
+        self.__sizeWidget.sizeItemChanged.connect(self.__sizeItemChangedExec)
+
+        self.__styleWidget = StyleWidget(font)
+        self.__styleWidget.boldChecked.connect(self.__setBold)
+        self.__styleWidget.italicChecked.connect(self.__setItalic)
+
+        self.__initPreviewTextEdit()
+
+        lay = QHBoxLayout()
+        lay.addWidget(self.__fontItemWidget)
+        lay.addWidget(self.__sizeWidget)
+        lay.addWidget(self.__styleWidget)
         lay.setContentsMargins(0, 0, 0, 0)
         lay.setSpacing(0)
 
-        fontBottomWidget = QWidget()
-        fontBottomWidget.setLayout(lay)
+        topWidget = QWidget()
+        topWidget.setLayout(lay)
 
         lay = QVBoxLayout()
-        lay.addWidget(QLabel('Font'))
-        lay.addWidget(fontBottomWidget)
+        lay.addWidget(QLabel('Preview'))
+        lay.addWidget(self.__previewTextEdit)
         lay.setContentsMargins(0, 0, 0, 0)
         lay.setSpacing(5)
 
+        bottomWidget = QWidget()
+        bottomWidget.setLayout(lay)
+        bottomWidget.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Preferred)
+
+        lay = QVBoxLayout()
+        lay.addWidget(topWidget)
+        lay.addWidget(bottomWidget)
         self.setLayout(lay)
 
-    def __initFonts(self, font: QFont):
-        self.__initFontsList()
-        self.__initCurrentFont(font=font)
+    def __initPreviewTextEdit(self):
+        font_family = self.__fontItemWidget.getFontFamily()
+        font_size = self.__sizeWidget.getSize()
+        bold_f = self.__styleWidget.isBold()
+        italic_f = self.__styleWidget.isItalic()
+        font = self.__previewTextEdit.currentFont()
+        font.setFamily(font_family)
+        font.setPointSize(int(font_size))
+        font.setBold(bold_f)
+        font.setItalic(italic_f)
+        self.__previewTextEdit.setCurrentFont(font)
+        self.__previewTextEdit.setText('Sample')
 
-    def __initFontsList(self):
-        fd = QFontDatabase()
-        fm = fd.families(QFontDatabase.Any)
-        self.__font_families.extend(fm)
-        self.__fontListWidget.addItems(fm)
+    def __setBold(self, f: int):
+        self.__previewTextEdit.selectAll()
+        font = self.__previewTextEdit.currentFont()
+        font.setBold(f)
+        self.__previewTextEdit.setCurrentFont(font)
+        self.__current_font = font
 
-    def __initCurrentFont(self, font: QFont):
-        items = self.__fontListWidget.findItems(font.family(), Qt.MatchFixedString)
-        item = QListWidgetItem()
-        if items:
-            item = items[0]
+    def __setItalic(self, f: bool):
+        self.__previewTextEdit.selectAll()
+        font = self.__previewTextEdit.currentFont()
+        font.setItalic(f)
+        self.__previewTextEdit.setCurrentFont(font)
+        self.__current_font = font
+
+    def __sizeItemChangedExec(self, size):
+        self.__previewTextEdit.selectAll()
+        font = self.__previewTextEdit.currentFont()
+        font.setPointSize(size)
+        self.__previewTextEdit.setCurrentFont(font)
+        self.__current_font = font
+
+    def __fontItemChangedExec(self, font_text, fd):
+        self.__previewTextEdit.selectAll()
+        font = self.__previewTextEdit.currentFont()
+        prev_size = font.pointSize()
+        styles = fd.styles(font_text)
+
+        font.setFamily(font_text)
+
+        sizes = fd.pointSizes(font_text, styles[0])
+        if prev_size in sizes:
+            self.__sizeWidget.setSizes(sizes, prev_size)
+            font.setPointSize(prev_size)
         else:
-            item = self.__fontListWidget.item(0)
-        self.__fontListWidget.setCurrentItem(item)
-        font_name = item.text()
-        self.__fontLineEdit.setText(font_name)
+            self.__sizeWidget.setSizes(sizes, prev_size)
+            # font.setPointSize(sizes[0])
 
-    def __fontItemChanged(self):
-        font_name = self.__fontListWidget.currentItem().text()
-        self.__fontLineEdit.setText(font_name)
-        fd = QFontDatabase()
-        self.fontItemChanged.emit(font_name, fd)
+        self.__previewTextEdit.setCurrentFont(font)
+        self.__current_font = font
 
-    def __textEdited(self):
-        self.__fontListWidget.clear()
-        text = self.__fontLineEdit.text()
+    def getFont(self):
+        return self.__previewTextEdit.currentFont()
+
+    def __textChanged(self):
+        text = self.__previewTextEdit.toPlainText()
         if text.strip() != '':
-            match_families = []
-            for family in self.__font_families:
-                if family.startswith(text):
-                    match_families.append(family)
-            if match_families:
-                self.__fontListWidget.addItems(match_families)
-            else:
-                pass
+            pass
         else:
-            self.__fontListWidget.addItems(self.__font_families)
-
-    def getFontFamily(self):
-        item = self.__fontListWidget.currentItem()
-        if item:
-            return item.text()
-        else:
-            return 'Arial'
+            self.__previewTextEdit.setCurrentFont(self.__current_font)

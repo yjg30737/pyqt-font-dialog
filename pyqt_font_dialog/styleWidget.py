@@ -1,6 +1,6 @@
 from PyQt5.QtCore import pyqtSignal, Qt
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QListWidget, QWidget, QLineEdit, QVBoxLayout, QLabel, QGroupBox, QCheckBox, QGridLayout
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QGroupBox, QCheckBox, QGridLayout
 
 
 class StyleWidget(QWidget):

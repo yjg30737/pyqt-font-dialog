@@ -14,7 +14,7 @@ setup(
     author_email='yjg30737@gmail.com',
     license='MIT',
     packages=find_packages(),
-    description='PyQt font dialog',
+    description='PyQt font dialog and widget',
     url='https://github.com/yjg30737/pyqt-font-dialog.git',
     long_description_content_type='text/markdown',
     long_description=long_description,
