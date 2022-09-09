@@ -1,11 +1,16 @@
 # pyqt-font-dialog
-PyQt font dialog and widget
+PyQt "select the font" dialog and widget
 
 ## Requirements
 PyQt5 >= 5.8
 
 ## Setup
 `python -m pip install pyqt-font-dialog`
+
+## Class/Method Overview
+* `FontDialog(font: QFont = QFont('Arial', 10), title='Font')` - font is font, title is title of the dialog.
+* `FontWidget(font: QFont = QFont('Arial', 10))`
+    * `fontChanged` - When current font item is changed, this is emitted.
 
 ## Usage
 ### 1. As a dialog
