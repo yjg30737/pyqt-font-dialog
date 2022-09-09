@@ -10,7 +10,7 @@ PyQt5 >= 5.8
 ## Class/Method Overview
 * `FontDialog(font: QFont = QFont('Arial', 10), title='Font')` - font is font, title is title of the dialog.
 * `FontWidget(font: QFont = QFont('Arial', 10))`
-    * `fontChanged` - When current font item is changed, this is emitted.
+    * `fontChanged` - When current font item is changed, this will be emitted.
 
 ## Usage
 ### 1. As a dialog
