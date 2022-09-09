@@ -1,5 +1,5 @@
 # pyqt-font-dialog
-PyQt Font Dialog
+PyQt font dialog and widget
 
 ## Requirements
 PyQt5 >= 5.8
