@@ -1,3 +1,4 @@
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QLabel, QSizePolicy, \
     QTextEdit, QVBoxLayout, QWidget, QHBoxLayout
@@ -8,6 +9,8 @@ from pyqt_font_dialog.styleWidget import StyleWidget
 
 
 class FontWidget(QWidget):
+    fontChanged = pyqtSignal(QFont)
+
     def __init__(self, font: QFont = QFont('Arial', 10)):
         super().__init__()
         self.__current_font = font
@@ -73,6 +76,7 @@ class FontWidget(QWidget):
         font.setBold(f)
         self.__previewTextEdit.setCurrentFont(font)
         self.__current_font = font
+        self.fontChanged.emit(self.__current_font)
 
     def __setItalic(self, f: bool):
         self.__previewTextEdit.selectAll()
@@ -80,6 +84,7 @@ class FontWidget(QWidget):
         font.setItalic(f)
         self.__previewTextEdit.setCurrentFont(font)
         self.__current_font = font
+        self.fontChanged.emit(self.__current_font)
 
     def __sizeItemChangedExec(self, size):
         self.__previewTextEdit.selectAll()
@@ -87,6 +92,7 @@ class FontWidget(QWidget):
         font.setPointSize(size)
         self.__previewTextEdit.setCurrentFont(font)
         self.__current_font = font
+        self.fontChanged.emit(self.__current_font)
 
     def __fontItemChangedExec(self, font_text, fd):
         self.__previewTextEdit.selectAll()
@@ -106,6 +112,7 @@ class FontWidget(QWidget):
 
         self.__previewTextEdit.setCurrentFont(font)
         self.__current_font = font
+        self.fontChanged.emit(self.__current_font)
 
     def getFont(self):
         return self.__previewTextEdit.currentFont()
