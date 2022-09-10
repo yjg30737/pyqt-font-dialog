@@ -49,11 +49,7 @@ class Window(QMainWindow):
         self.setCentralWidget(mainWidget)
 
     def fontChanged(self, font):
-        self.__te.selectAll()
         self.__te.setFont(font)
-        cur = self.__te.textCursor()
-        cur.clearSelection()
-        self.__te.setTextCursor(cur)
 
 
 if __name__ == "__main__":
