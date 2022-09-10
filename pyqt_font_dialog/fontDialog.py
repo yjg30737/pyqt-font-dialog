@@ -16,8 +16,8 @@ class FontDialog(QDialog):
         self.setWindowTitle(title)
         self.setWindowFlags(Qt.WindowCloseButtonHint)
 
-        fontWidget = FontWidget(font=font)
-        fontWidget.layout().setContentsMargins(0, 0, 0, 0)
+        self.__fontWidget = FontWidget(font=font)
+        self.__fontWidget.layout().setContentsMargins(0, 0, 0, 0)
 
         okBtn = QPushButton('OK')
         cancelBtn = QPushButton('Cancel')
@@ -35,6 +35,9 @@ class FontDialog(QDialog):
         okCancelWidget.setLayout(lay)
 
         lay = QVBoxLayout()
-        lay.addWidget(fontWidget)
+        lay.addWidget(self.__fontWidget)
         lay.addWidget(okCancelWidget)
         self.setLayout(lay)
+
+    def getFont(self):
+        return self.__fontWidget.getFont()
