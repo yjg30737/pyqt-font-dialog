@@ -50,7 +50,7 @@ class Window(QMainWindow):
 
     def fontChanged(self, font):
         self.__te.selectAll()
-        self.__te.setCurrentFont(font)
+        self.__te.setFont(font)
         cur = self.__te.textCursor()
         cur.clearSelection()
         self.__te.setTextCursor(cur)
