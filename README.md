@@ -23,3 +23,48 @@ if reply == QDialog.Accepted:
 
 ### Preview
 ![image](https://user-images.githubusercontent.com/55078043/167970048-cd8e1d76-d2f2-4c63-964d-87158d8dc53c.png)
+
+### 2. As a part of window
+```python
+from PyQt5.QtWidgets import QMainWindow, QApplication, QHBoxLayout, QWidget, QTextEdit
+from pyqt_font_dialog.fontWidget import FontWidget
+
+
+class Window(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.__initUi()
+
+    def __initUi(self):
+        self.__te = QTextEdit()
+        fontWidget = FontWidget()
+        fontWidget.fontChanged.connect(self.fontChanged)
+        lay = QHBoxLayout()
+        lay.addWidget(self.__te)
+        lay.addWidget(fontWidget)
+        mainWidget = QWidget()
+        mainWidget.setLayout(lay)
+        self.setCentralWidget(mainWidget)
+
+    def fontChanged(self, font):
+        self.__te.selectAll()
+        self.__te.setCurrentFont(font)
+        cur = self.__te.textCursor()
+        cur.clearSelection()
+        self.__te.setTextCursor(cur)
+
+
+if __name__ == "__main__":
+    import sys
+
+    app = QApplication(sys.argv)
+    ex = Window()
+    ex.show()
+    sys.exit(app.exec_())
+```
+
+### Preview
+
+https://user-images.githubusercontent.com/55078043/189460933-387d3570-e153-4df9-8a21-d02a46fbfe64.mp4
+
+
