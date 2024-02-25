@@ -10,9 +10,11 @@ PyQt5 >= 5.8
 ## Class/Method Overview
 * `FontDialog(font: QFont = QFont('Arial', 10), title='Font')` - font is font, title is title of the dialog.
     * `getFont()` - get the selected font.
+    * `getFontWidget()` - get the main FontWidget of the dialog.
 * `FontWidget(font: QFont = QFont('Arial', 10))`
     * `fontChanged(QFont)` - When current font item is changed, this will be emitted.
     * `getFont()` - get the selected font.
+    * `setCurrentFont(QFont)` - set the current font.
 
 ## Usage
 ### 1. As a dialog
