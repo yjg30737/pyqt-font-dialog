@@ -41,3 +41,6 @@ class FontDialog(QDialog):
 
     def getFont(self):
         return self.__fontWidget.getFont()
+
+    def getFontWidget(self):
+        return self.__fontWidget
