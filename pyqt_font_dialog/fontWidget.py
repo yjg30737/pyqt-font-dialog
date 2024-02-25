@@ -75,6 +75,7 @@ class FontWidget(QWidget):
         font = self.__previewTextEdit.currentFont()
         font.setBold(f)
         self.__previewTextEdit.setCurrentFont(font)
+
         self.__current_font = font
         self.fontChanged.emit(self.__current_font)
 
@@ -83,6 +84,7 @@ class FontWidget(QWidget):
         font = self.__previewTextEdit.currentFont()
         font.setItalic(f)
         self.__previewTextEdit.setCurrentFont(font)
+
         self.__current_font = font
         self.fontChanged.emit(self.__current_font)
 
@@ -91,6 +93,7 @@ class FontWidget(QWidget):
         font = self.__previewTextEdit.currentFont()
         font.setPointSize(size)
         self.__previewTextEdit.setCurrentFont(font)
+
         self.__current_font = font
         self.fontChanged.emit(self.__current_font)
 
@@ -116,6 +119,15 @@ class FontWidget(QWidget):
 
     def getFont(self):
         return self.__previewTextEdit.currentFont()
+
+    def setCurrentFont(self, font):
+        self.__fontItemWidget.setCurrentFont(font=font)
+        self.__sizeWidget.setCurrentSize(font=font)
+        self.__styleWidget.setCurrentStyle(font=font)
+
+        self.__previewTextEdit.setCurrentFont(font)
+        self.__current_font = font
+        self.fontChanged.emit(self.__current_font)
 
     def __textChanged(self):
         text = self.__previewTextEdit.toPlainText()

@@ -37,7 +37,7 @@ class SizeWidget(QWidget):
 
     def __initSizes(self, font: QFont):
         self.__initSizesList(font=font)
-        self.__initCurrentSize(font=font)
+        self.setCurrentSize(font=font)
 
     def __initSizesList(self, font: QFont):
         fd = QFontDatabase()
@@ -53,7 +53,7 @@ class SizeWidget(QWidget):
         sizes = list(map(str, sizes))
         self.__sizeListWidget.addItems(sizes)
 
-    def __initCurrentSize(self, font: QFont):
+    def setCurrentSize(self, font: QFont):
         items = self.__sizeListWidget.findItems(str(font.pointSize()), Qt.MatchFixedString)
         item = QListWidgetItem()
         if items:

@@ -21,7 +21,7 @@ class StyleWidget(QWidget):
         self.__boldChkBox.stateChanged.connect(self.boldChecked)
         self.__italicChkBox.stateChanged.connect(self.italicChecked)
 
-        self.__initCurrentStyle(font=font)
+        self.setCurrentStyle(font=font)
 
         lay = QVBoxLayout()
         lay.setAlignment(Qt.AlignTop)
@@ -35,7 +35,7 @@ class StyleWidget(QWidget):
 
         self.setLayout(lay)
 
-    def __initCurrentStyle(self, font: QFont):
+    def setCurrentStyle(self, font: QFont):
         self.__boldChkBox.setChecked(font.bold())
         self.__italicChkBox.setChecked(font.italic())
 

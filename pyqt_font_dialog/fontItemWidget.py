@@ -38,7 +38,7 @@ class FontItemWidget(QWidget):
 
     def __initFonts(self, font: QFont):
         self.__initFontsList()
-        self.__initCurrentFont(font=font)
+        self.setCurrentFont(font=font)
 
     def __initFontsList(self):
         fd = QFontDatabase()
@@ -46,7 +46,7 @@ class FontItemWidget(QWidget):
         self.__font_families.extend(fm)
         self.__fontListWidget.addItems(fm)
 
-    def __initCurrentFont(self, font: QFont):
+    def setCurrentFont(self, font: QFont):
         items = self.__fontListWidget.findItems(font.family(), Qt.MatchFixedString)
         item = QListWidgetItem()
         if items:
